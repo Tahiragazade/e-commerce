@@ -21,7 +21,7 @@ class ProductSize extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'product size';
+        return 'product_size';
     }
 
     /**

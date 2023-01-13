@@ -2,10 +2,12 @@
 
 namespace frontend\controllers;
 
+use common\models\Product;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
+use yii\data\Pagination;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -21,6 +23,13 @@ use frontend\models\ContactForm;
  */
 class SiteController extends Controller
 {
+	public function init()
+	{
+
+		parent::init();
+		$language = new \common\components\Language();
+		$language->__init();
+	}
     /**
      * {@inheritdoc}
      */
@@ -79,11 +88,29 @@ class SiteController extends Controller
     }
 	public function actionShop()
 	{
-		return $this->render('/shop/index');
+
+		$query = Product::find()->multilingual();
+		$countQuery = clone $query;
+		$pages = new Pagination(['totalCount' => $countQuery->count()]);
+		$products = $query->offset($pages->offset)
+			->limit($pages->limit)
+			->all();
+
+		return $this->render('/shop/index', [
+			'products' => $products,
+			'pages' => $pages,
+		]);
 	}
-	public function actionDetail()
+	public function actionDetail($id)
 	{
-		return $this->render('/shop/details');
+		$product = Product::find()->where('id=:id',[':id' => $id])->multilingual()->one();
+		$sizes=$product->productSizes;
+		$colors=$product->productColors;
+		return $this->render('/shop/details',[
+			'product'=>$product,
+			'sizes'=>$sizes,
+			'colors'=>$colors
+		]);
 	}
 
     /**

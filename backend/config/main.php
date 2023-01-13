@@ -13,18 +13,23 @@ return [
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
-        'request' => [
-            'csrfParam' => '_csrf-backend',
-        ],
-        'user' => [
-            'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
-        ],
-        'session' => [
-            // this is the name of the session cookie used for login on the backend
-            'name' => 'advanced-backend',
-        ],
+	    'user' => [
+//			'class'=>'yii\web\User',
+		    'identityClass' => 'common\models\Admin',
+		    'enableAutoLogin' => true,
+		    'identityCookie' => [
+			    'name' => '_backendUser', // unique for backend
+		    ]
+	    ],
+	    'session' => [
+		    'name' => 'PHPBACKSESSID',
+		    'savePath' => sys_get_temp_dir(),
+	    ],
+	    'request' => [
+		    // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
+		    'cookieValidationKey' => 'This is my another nanay nanay key',
+		    'csrfParam' => '_backendCSRF',
+	    ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -37,23 +42,7 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-	    'i18n' => [
-		    'class' => 'common\components\I18N',
-		    'translations' => [
-			    '*' => [
-				    'class' => 'yii\i18n\DbMessageSource',
-				    'enableCaching' => false,
-				    'cachingDuration' => 3600,
-				    'on missingTranslation' => ['common\components\I18N', 'handleMissingTranslation']
-			    ]
-		    ],
-	    ],
-	    'helper'=>[
-		    'class' => 'common\components\Helpers',
-	    ],
-	    'base' => [
-		    'class' => 'common\components\Base'
-	    ],
+
 //	    'view' => [
 //		    'theme' => [
 //			    'pathMap' => [

@@ -1,3 +1,8 @@
+<?php
+
+use yii\helpers\Html;
+
+?>
 <div class="container-fluid">
 	<div class="row bg-secondary py-1 px-xl-5">
 		<div class="col-lg-6 d-none d-lg-block">
@@ -28,9 +33,9 @@
 				<div class="btn-group">
 					<button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">EN</button>
 					<div class="dropdown-menu dropdown-menu-right">
-						<button class="dropdown-item" type="button">FR</button>
-						<button class="dropdown-item" type="button">AR</button>
-						<button class="dropdown-item" type="button">RU</button>
+						<?= Html::a('AZ', ['/az'], ['class' => 'dropdown-item']) ?>
+						<?= Html::a('EN', ['/en'], ['class' => 'dropdown-item']) ?>
+						<?= Html::a('RU', ['/ru'], ['class' => 'dropdown-item']) ?>
 					</div>
 				</div>
 			</div>

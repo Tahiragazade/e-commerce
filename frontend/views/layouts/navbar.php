@@ -44,7 +44,7 @@ use yii\helpers\Html;
 				<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
 					<div class="navbar-nav mr-auto py-0">
                         <?= Html::a('Home', ['/'], ['class' => 'nav-item nav-link']) ?>
-                        <?= Html::a('Shop', ['shop'], ['class' => 'nav-item nav-link']) ?>
+                        <?= Html::a('Shop', ['site/shop'], ['class' => 'nav-item nav-link']) ?>
                         <?= Html::a('Shop Details', ['site/detail'], ['class' => 'nav-item nav-link']) ?>
 						<div class="nav-item dropdown">
 							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down mt-1"></i></a>
