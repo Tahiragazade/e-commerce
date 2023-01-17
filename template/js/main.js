@@ -98,6 +98,7 @@
             }
         }
         button.parent().parent().find('input').val(newVal);
+        return false;
     });
     
 })(jQuery);

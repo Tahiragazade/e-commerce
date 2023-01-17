@@ -45,11 +45,10 @@ use yii\helpers\Html;
 					<div class="navbar-nav mr-auto py-0">
                         <?= Html::a('Home', ['/'], ['class' => 'nav-item nav-link']) ?>
                         <?= Html::a('Shop', ['site/shop'], ['class' => 'nav-item nav-link']) ?>
-                        <?= Html::a('Shop Details', ['site/detail'], ['class' => 'nav-item nav-link']) ?>
 						<div class="nav-item dropdown">
 							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down mt-1"></i></a>
 							<div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
-								<a href="cart.html" class="dropdown-item">Shopping Cart</a>
+								<?= Html::a('Shopping Cart', ['cart/index'], ['class' => 'dropdown-item']) ?>
 								<a href="checkout.html" class="dropdown-item">Checkout</a>
 							</div>
 						</div>

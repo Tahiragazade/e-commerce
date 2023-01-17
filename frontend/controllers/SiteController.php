@@ -2,12 +2,14 @@
 
 namespace frontend\controllers;
 
+use common\models\Cart;
 use common\models\Product;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\data\Pagination;
+use yii\helpers\ArrayHelper;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -105,11 +107,25 @@ class SiteController extends Controller
 	{
 		$product = Product::find()->where('id=:id',[':id' => $id])->multilingual()->one();
 		$sizes=$product->productSizes;
+		$size_map=[];
+		foreach($sizes as $size){
+			$array=[$size->size->id=>$size->size->name];
+			$size_map=	ArrayHelper::merge($array, $size_map);
+		}
 		$colors=$product->productColors;
+		$color_map=[];
+		foreach($colors as $color){
+			$array=[$color->color->id=>$color->color->name];
+			$color_map=	ArrayHelper::merge($array, $color_map);
+		}
+		$model=new Cart();
 		return $this->render('/shop/details',[
 			'product'=>$product,
 			'sizes'=>$sizes,
-			'colors'=>$colors
+			'colors'=>$colors,
+			'size_map'=>$size_map,
+			'model'=>$model,
+			'color_map'=>$color_map,
 		]);
 	}
 

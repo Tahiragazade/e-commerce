@@ -47,42 +47,40 @@
 				<h3 class="font-weight-semi-bold mb-4">$<?=$product->price?></h3>
 				<p class="mb-4"><?=$product->{'small_description_'.Yii::$app->language}?></p>
                 <?php $form = ActiveForm::begin([
+	                'fieldConfig' => [
+		                'template' => "{input}",
+		                'options' => ['tag' => false], // remove wrapper tag
+	                ],
+	                'action' =>['cart/create'],
+                    'method' => 'post',
 	                'options' => [],
                 ]) ?>
-				<div class="d-flex mb-3">
+               <?= $form->field($model, 'product_id')->hiddenInput(['value'=> $product->id])->label(false);?>
+
+                <div class="d-flex mb-3">
 					<strong class="text-dark mr-3">Sizes:</strong>
-
-                        <?php foreach($sizes as $size){?>
 						<div class="custom-control custom-radio custom-control-inline">
-							<input type="radio" class="custom-control-input" id="size-<?=$size->size->id?>" name="size">
-							<label class="custom-control-label" for="size-<?=$size->size->id?>"><?=$size->size->name?></label>
+                            <?= $form->field($model, 'size_id')->radioList( $size_map,['labelOptions'=>['class'=>'custom-control-input']] )->label(false);?>
 						</div>
-                        <?php }?>
-
 
 				</div>
 				<div class="d-flex mb-4">
 					<strong class="text-dark mr-3">Colors:</strong>
-
-                        <?php foreach($colors as $color){?>
 						<div class="custom-control custom-radio custom-control-inline">
-							<input type="radio" class="custom-control-input" id="color-<?=$color->color->id?>" name="color">
-							<label class="custom-control-label" for="color-<?=$color->color->id?>"><?=$color->color->name?></label>
+							<?= $form->field($model, 'color_id')->radioList( $color_map,['labelOptions'=>['class'=>'custom-control-input']] )->label(false);?>
 						</div>
-                        <?php }?>
-
-
 				</div>
 				<div class="d-flex align-items-center mb-4 pt-2">
 					<div class="input-group quantity mr-3" style="width: 130px;">
 						<div class="input-group-btn">
-							<button class="btn btn-primary btn-minus">
+							<button type="button" class="btn btn-primary btn-minus">
 								<i class="fa fa-minus"></i>
 							</button>
 						</div>
-						<input type="text" class="form-control bg-secondary border-0 text-center" value="1">
+                            <?= $form->field($model, 'count')->textInput(['class'=>'form-control bg-secondary border-0 text-center','value' =>1,'tag' => false])->label(false) ?>
+
 						<div class="input-group-btn">
-							<button class="btn btn-primary btn-plus">
+							<button type="button" class="btn btn-primary btn-plus">
 								<i class="fa fa-plus"></i>
 							</button>
 						</div>
