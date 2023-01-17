@@ -18,8 +18,21 @@ use yii\helpers\Html;
 				<div class="btn-group">
 					<button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>
 					<div class="dropdown-menu dropdown-menu-right">
-						<button class="dropdown-item" type="button">Sign in</button>
-						<button class="dropdown-item" type="button">Sign up</button>
+<!--						<button class="dropdown-item" type="button">Sign in</button>-->
+                        <?php
+                        if(Yii::$app->user->isGuest) {
+	                        echo Html::a('Sign in', ['/site/login'], ['class' => ['dropdown-item']]);
+	                        echo Html::a('Sign up', ['/site/signup'], ['class' => ['dropdown-item']]);
+                        }
+                        else{
+	                        echo Html::beginForm(['/site/logout'], 'post', ['class' => 'd-flex'])
+		                        . Html::submitButton(
+			                        'Logout (' . Yii::$app->user->identity->username . ')',
+			                        ['class' => 'dropdown-item']
+		                        )
+		                        . Html::endForm();
+                        }
+                        ?>
 					</div>
 				</div>
 				<div class="btn-group mx-2">
