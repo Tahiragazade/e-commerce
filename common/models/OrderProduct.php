@@ -17,7 +17,7 @@ use Yii;
  * @property float $price
  *
  * @property Color $color
- * @property Orders $order
+ * @property Order $order
  * @property Product $product
  * @property Size $size
  */
@@ -41,7 +41,7 @@ class OrderProduct extends \yii\db\ActiveRecord
             [['order_id', 'product_id', 'size_id', 'color_id', 'count'], 'integer'],
             [['discounted_price', 'price'], 'number'],
             [['color_id'], 'exist', 'skipOnError' => true, 'targetClass' => Color::class, 'targetAttribute' => ['color_id' => 'id']],
-            [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Orders::class, 'targetAttribute' => ['order_id' => 'id']],
+            [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Order::class, 'targetAttribute' => ['order_id' => 'id']],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::class, 'targetAttribute' => ['product_id' => 'id']],
             [['size_id'], 'exist', 'skipOnError' => true, 'targetClass' => Size::class, 'targetAttribute' => ['size_id' => 'id']],
         ];
@@ -81,7 +81,7 @@ class OrderProduct extends \yii\db\ActiveRecord
      */
     public function getOrder()
     {
-        return $this->hasOne(Orders::class, ['id' => 'order_id']);
+        return $this->hasOne(Order::class, ['id' => 'order_id']);
     }
 
     /**

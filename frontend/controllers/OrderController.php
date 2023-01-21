@@ -2,8 +2,12 @@
 
 namespace frontend\controllers;
 
+use common\models\Address;
+use common\models\Cart;
 use common\models\Order;
+use common\models\OrderProduct;
 use frontend\models\OrderSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -65,22 +69,71 @@ class OrderController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
-    {
-        $model = new Order();
+//    public function actionCreate()
+//    {
+//        $model = new Order();
+//
+//        if ($this->request->isPost) {
+//            if ($model->load($this->request->post()) && $model->save()) {
+//                return $this->redirect(['view', 'id' => $model->id]);
+//            }
+//        } else {
+//            $model->loadDefaultValues();
+//        }
+//
+//        return $this->render('create', [
+//            'model' => $model,
+//        ]);
+//    }
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
+	public function actionCreate()
+	{
+		$model = new Address();
+				print_r($model->payment_type);
+				die();
+		if ($this->request->isPost) {
+			if ($model->load($this->request->post())) {
+//				print_r($model);
+//				die();
+				$order=new Order();
+				$order->session_id=Yii::$app->session->id;
+				$order->user_id=Yii::$app->user->id;
+				$order->payment_type=$model->payment_type;
+				$order->total_price=$model->total_price;
+				$order->shipping_price=$model->shipping_price;
+				$order->created_at=time();
+				$order->updated_at=time();
+				if(!$order->save()){
+					print_r($order->errors);
+					die();
+				}
+				$session = Yii::$app->session;
+				$products=$session->get('products');
+				foreach($products as $product_id) {
+					$order_product = new OrderProduct();
+					$product=Cart::findOne($product_id);
+					$order_product->order_id=$order->id;
+					$order_product->product_id=$product->product_id;
+					$order_product->size_id=$product->size->id;
+					$order_product->color_id=$product->color->id;
+					$order_product->count=$product->count;
+					$order_product->price=$product->product->price;
+					if(!$order_product->save()){
+						print_r($order_product->errors);
+						die();
+					}
+				}
+				$model->save();
+				return $this->redirect(['view', 'id' => $model->id]);
+			}
+		} else {
+			$model->loadDefaultValues();
+		}
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
+		return $this->render('create', [
+			'model' => $model,
+		]);
+	}
 
     /**
      * Updates an existing Order model.

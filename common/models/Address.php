@@ -29,6 +29,11 @@ class Address extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+//	public $payment_type;
+//	public $shipping_price;
+//	public $total_price;
+//	public $products;
+
     public static function tableName()
     {
         return 'address';
@@ -45,6 +50,7 @@ class Address extends \yii\db\ActiveRecord
             [['first_name', 'last_name', 'email', 'address_1', 'address_2', 'city', 'state'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 30],
             [['zip_code'], 'string', 'max' => 10],
+	        [['total_price','shipping_price','payment_type'],'required'],
             [['country_id'], 'exist', 'skipOnError' => true, 'targetClass' => Country::class, 'targetAttribute' => ['country_id' => 'id']],
             [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Orders::class, 'targetAttribute' => ['order_id' => 'id']],
         ];
@@ -69,6 +75,9 @@ class Address extends \yii\db\ActiveRecord
             'state' => Yii::t('app', 'State'),
             'zip_code' => Yii::t('app', 'Zip Code'),
             'address_type' => Yii::t('app', 'Address Type'),
+            'payment_type' => Yii::t('app', 'Address Type'),
+            'total_price' => Yii::t('app', 'Address Type'),
+            'shipping_price' => Yii::t('app', 'Address Type'),
         ];
     }
 

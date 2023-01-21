@@ -2,9 +2,11 @@
 
 namespace frontend\controllers;
 
+use common\models\Address;
 use common\models\Cart;
 use frontend\models\CartSearch;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -67,16 +69,23 @@ class CartController extends Controller
         ]);
     }
 	public function actionCheckout(){
-		$products=Cart::find()->where(['session_id'=>Yii::$app->session->id])->orWhere(['user_id'=>Yii::$app->user->id])->all();
+		$products=Cart::find()->orWhere(['session_id'=>Yii::$app->session->id])->orWhere(['user_id'=>Yii::$app->user->id])->all();
+
 		$total_price=0;
+		$cart_ids=[];
 		foreach($products as $product){
 			$total_price+=$product->product->price*$product->count;
+			$cart_ids[]=$product->id;
 		}
+		$session = Yii::$app->session;
+		$session->set('products', $cart_ids);
 		$shipping_price=10;
+		$model=new Address();
 		return $this->render('/shop/checkout', [
 			'products'=>$products,
 			'total_price'=>$total_price,
-			'shipping_price'=>$shipping_price
+			'shipping_price'=>$shipping_price,
+			'model'=>$model,
 		]);
 	}
 

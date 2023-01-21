@@ -1,33 +1,43 @@
+<?php
+use yii\widgets\ActiveForm;
+?>
 <!-- Checkout Start -->
 <div class="container-fluid">
 	<div class="row px-xl-5">
 		<div class="col-lg-8">
 			<h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Billing Address</span></h5>
-			<div class="bg-light p-30 mb-5">
+			<?php $form = ActiveForm::begin(['action' => ['order/create'],'options' => ['method' => 'post']]) ?>
+            <?php $form->field($model,'total_price')->hiddenInput(['value'=>$total_price])->label(false)?>
+            <?php $form->field($model,'shipping_price')->hiddenInput(['value'=>$shipping_price])->label(false)?>
+            <?php $form->field($model,'payment_type')->hiddenInput(['value'=>1])->label(false)?>
+            <?php $form->field($model,'country_id')->hiddenInput(['value'=>1])->label(false)?>
+
+
+            <div class="bg-light p-30 mb-5">
 				<div class="row">
 					<div class="col-md-6 form-group">
 						<label>First Name</label>
-						<input class="form-control" type="text" placeholder="John">
+                        <?= $form->field($model,'first_name')->textInput(['class'=>'form-control','value'=>''])->label(false);?>
 					</div>
 					<div class="col-md-6 form-group">
 						<label>Last Name</label>
-						<input class="form-control" type="text" placeholder="Doe">
+						<?= $form->field($model,'last_name')->textInput(['class'=>'form-control','value'=>''])->label(false);?>
 					</div>
 					<div class="col-md-6 form-group">
 						<label>E-mail</label>
-						<input class="form-control" type="text" placeholder="example@email.com">
+						<?= $form->field($model,'email')->textInput(['class'=>'form-control','value'=>''])->label(false);?>
 					</div>
 					<div class="col-md-6 form-group">
 						<label>Mobile No</label>
-						<input class="form-control" type="text" placeholder="+123 456 789">
+						<?= $form->field($model,'phone')->textInput(['class'=>'form-control','value'=>''])->label(false);?>
 					</div>
 					<div class="col-md-6 form-group">
 						<label>Address Line 1</label>
-						<input class="form-control" type="text" placeholder="123 Street">
+						<?= $form->field($model,'address_1')->textInput(['class'=>'form-control','value'=>''])->label(false);?>
 					</div>
 					<div class="col-md-6 form-group">
 						<label>Address Line 2</label>
-						<input class="form-control" type="text" placeholder="123 Street">
+						<?= $form->field($model,'address_2')->textInput(['class'=>'form-control','value'=>''])->label(false);?>
 					</div>
 					<div class="col-md-6 form-group">
 						<label>Country</label>
@@ -40,16 +50,17 @@
 					</div>
 					<div class="col-md-6 form-group">
 						<label>City</label>
-						<input class="form-control" type="text" placeholder="New York">
+						<?= $form->field($model,'city')->textInput(['class'=>'form-control','value'=>''])->label(false);?>
 					</div>
 					<div class="col-md-6 form-group">
 						<label>State</label>
-						<input class="form-control" type="text" placeholder="New York">
+						<?= $form->field($model,'state')->textInput(['class'=>'form-control','value'=>''])->label(false);?>
 					</div>
 					<div class="col-md-6 form-group">
 						<label>ZIP Code</label>
-						<input class="form-control" type="text" placeholder="123">
+						<?= $form->field($model,'zip_code')->textInput(['class'=>'form-control','value'=>''])->label(false);?>
 					</div>
+
                     <?php if(Yii::$app->user->isGuest){?>
 					<div class="col-md-12 form-group">
 						<div class="custom-control custom-checkbox">
@@ -175,6 +186,7 @@
 				</div>
 			</div>
 		</div>
+		<?php ActiveForm::end()?>
 	</div>
 </div>
 <!-- Checkout End -->

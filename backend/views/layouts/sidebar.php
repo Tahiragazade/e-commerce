@@ -58,6 +58,7 @@
 						'label' => 'Setting',
 						'items' => [
 							['label' => 'Category', 'iconStyle' => 'far', 'url' => ['category/index']],
+							['label' => 'Country', 'iconStyle' => 'far', 'url' => ['country/index']],
 							['label' => 'Language', 'iconStyle' => 'far', 'url' => ['lang/index']],
 							['label' => 'Size', 'iconStyle' => 'far', 'url' => ['size/index']],
 							['label' => 'Color', 'iconStyle' => 'far', 'url' => ['color/index']],
