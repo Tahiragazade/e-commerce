@@ -122,7 +122,11 @@ class OrderController extends Controller
 						die();
 					}
 				}
-				$model->save();
+				$model->order_id=$order->id;
+				if(!$model->save()){
+					print_r($model->errors);
+					die();
+				}
 				return $this->redirect(['view', 'id' => $model->id]);
 			}
 		} else {

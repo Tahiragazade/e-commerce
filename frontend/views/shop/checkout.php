@@ -10,7 +10,8 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model1,'total_price')->hiddenInput(['value'=>$total_price])->label(false)?>
             <?= $form->field($model1,'shipping_price')->hiddenInput(['value'=>$shipping_price])->label(false)?>
             <?= $form->field($model1,'payment_type')->hiddenInput(['value'=>1])->label(false)?>
-            <?= $form->field($model1,'country_id')->hiddenInput(['value'=>1])->label(false)?>
+            <?= $form->field($model,'country_id')->hiddenInput(['value'=>1])->label(false)?>
+            <?= $form->field($model,'address_type')->hiddenInput(['value'=>0])->label(false)?>
 
             <div class="bg-light p-30 mb-5">
 				<div class="row">
