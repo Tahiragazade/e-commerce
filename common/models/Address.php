@@ -50,7 +50,7 @@ class Address extends \yii\db\ActiveRecord
             [['first_name', 'last_name', 'email', 'address_1', 'address_2', 'city', 'state'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 30],
             [['zip_code'], 'string', 'max' => 10],
-	        [['total_price','shipping_price','payment_type'],'required'],
+//	        [['total_price','shipping_price','payment_type'],'required'],
             [['country_id'], 'exist', 'skipOnError' => true, 'targetClass' => Country::class, 'targetAttribute' => ['country_id' => 'id']],
             [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Orders::class, 'targetAttribute' => ['order_id' => 'id']],
         ];
