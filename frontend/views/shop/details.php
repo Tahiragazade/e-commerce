@@ -1,4 +1,10 @@
+<?php
 
+use kartik\range\RangeInput;
+use yii\widgets\ActiveForm;
+use yii2mod\rating\StarRating;
+
+?>
 <!-- Shop Detail Start -->
 <div class="container-fluid pb-5">
 	<div class="row px-xl-5">
@@ -6,9 +12,6 @@
 			<div id="product-carousel" class="carousel slide" data-ride="carousel">
 				<div class="carousel-inner bg-light">
 					<?php
-
-					use yii\widgets\ActiveForm;
-
 					$images=explode(',',$product->photo);
 					foreach($images as $key=> $image){
                         if($key==0){
@@ -146,6 +149,7 @@
 								</div>
 							</div>
 							<div class="col-md-6">
+
 								<h4 class="mb-4">Leave a review</h4>
 								<small>Your email address will not be published. Required fields are marked *</small>
 								<div class="d-flex my-3">
@@ -158,23 +162,30 @@
 										<i class="far fa-star"></i>
 									</div>
 								</div>
-								<form>
+								<?php $form = ActiveForm::begin(['action' => ['comment/create'],'options' => ['method' => 'post']]) ?>
+
+                                <?= $form->field($comment, 'star')->widget(RangeInput::classname(), [
+	                                'options' => ['placeholder' => 'Rate (0 - 5)...'],
+	                                'html5Container' => ['style' => 'width:350px'],
+	                                'html5Options' => ['min' => 0, 'max' => 5],
+	                                'addon' => ['append' => ['content' => '<i class="fas fa-star"></i>']]
+                                ]);?>
 									<div class="form-group">
 										<label for="message">Your Review *</label>
-										<textarea id="message" cols="30" rows="5" class="form-control"></textarea>
+                                        <?=$form->field($comment,'note')->textarea(['class'=>'form-control','cols'=>30,'rows'=>5])->label(false)?>
 									</div>
 									<div class="form-group">
 										<label for="name">Your Name *</label>
-										<input type="text" class="form-control" id="name">
+										<?=$form->field($comment,'name')->textInput(['class'=>'form-control'])->label(false)?>
 									</div>
 									<div class="form-group">
 										<label for="email">Your Email *</label>
-										<input type="email" class="form-control" id="email">
+										<?=$form->field($comment,'email')->textInput(['class'=>'form-control'])->label(false)?>
 									</div>
 									<div class="form-group mb-0">
 										<input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
 									</div>
-								</form>
+								<?php ActiveForm::end()?>
 							</div>
 						</div>
 					</div>

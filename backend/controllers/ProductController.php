@@ -143,13 +143,52 @@ class ProductController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+	    $langs= Yii::$app->base->getLangList();
+	    $sizes=ArrayHelper::map(Size::find()->all(),'id', 'name');
+	    $colors=ArrayHelper::map(Color::find()->multilingual()->all(),'id', 'name');
+	    $categories=ArrayHelper::map(Category::find()->multilingual()->all(),'id', 'name');
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+	    if ($model->load($this->request->post()) ) {
+
+		    $model->created_by =Yii::$app->user->id;
+		    $model->created_at =time();
+		    $model->updated_at =time();
+		    $model->save();
+		    $model->load($this->request->post());
+		    ProductContent::deleteAll(['product_id'=>$model->id]);
+		    foreach($langs as $key=> $value) {
+			    $content = new ProductContent();
+			    $content->lang = $key;
+			    $content->product_id = $model->id;
+			    $content->title = $model->{'title_'.$key};
+			    $content->small_description = $model->{'small_description_'.$key};
+			    $content->description = $model->{'description_'.$key};
+			    $content->information = $model->{'information_'.$key};
+			    $model->link('productContents', $content);
+		    }
+			ProductSize::deleteAll(['product_id'=>$model->id]);
+		    foreach($model->size as $size){
+			    $sizes=new ProductSize();
+			    $sizes->product_id=$model->id;
+			    $sizes->size_id=$size;
+			    $sizes->save();
+		    }
+			Product::deleteAll(['product_id'=>$model->id]);
+		    foreach($model->color as $color){
+			    $colors=new ProductColor();
+			    $colors->product_id=$model->id;
+			    $colors->color_id=$color;
+			    $colors->save();
+		    }
+		    return $this->redirect(['index']);
+	    }
 
         return $this->render('update', [
             'model' => $model,
+	        'langs'=>$langs,
+	        'sizes'=>$sizes,
+	        'colors'=>$colors,
+	        'categories'=>$categories,
         ]);
     }
 
@@ -176,7 +215,7 @@ class ProductController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Product::findOne(['id' => $id])) !== null) {
+        if (($model = Product::find()->where(['id' => $id])->multilingual()->one()) !== null) {
             return $model;
         }
 

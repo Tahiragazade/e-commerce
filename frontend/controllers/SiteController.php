@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Cart;
+use common\models\Comment;
 use common\models\Product;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
@@ -105,6 +106,7 @@ class SiteController extends Controller
 	}
 	public function actionDetail($id)
 	{
+		$comment=new Comment();
 		$product = Product::find()->where('id=:id',[':id' => $id])->multilingual()->one();
 		$sizes=$product->productSizes;
 		$size_map=[];
@@ -124,8 +126,9 @@ class SiteController extends Controller
 			'sizes'=>$sizes,
 			'colors'=>$colors,
 			'size_map'=>$size_map,
-			'model'=>$model,
+			'comment'=>$comment,
 			'color_map'=>$color_map,
+			'model'=>$model
 		]);
 	}
 
