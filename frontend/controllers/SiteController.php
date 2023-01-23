@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Cart;
+use common\models\Category;
 use common\models\Comment;
 use common\models\Product;
 use frontend\models\ResendVerificationEmailForm;
@@ -87,7 +88,11 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+		$categories=Category::find()->multilingual()->all();
+        return $this->render('index',
+        [
+			'categories'=>$categories,
+        ]);
     }
 	public function actionShop()
 	{
@@ -109,6 +114,8 @@ class SiteController extends Controller
 		$comment=new Comment();
 		$product = Product::find()->where('id=:id',[':id' => $id])->multilingual()->one();
 		$sizes=$product->productSizes;
+		$comments=Comment::find()->where('product_id=:id',[':id' => $id])->all();
+
 		$size_map=[];
 		foreach($sizes as $size){
 			$array=[$size->size->id=>$size->size->name];
@@ -128,7 +135,8 @@ class SiteController extends Controller
 			'size_map'=>$size_map,
 			'comment'=>$comment,
 			'color_map'=>$color_map,
-			'model'=>$model
+			'model'=>$model,
+			'comments'=>$comments
 		]);
 	}
 

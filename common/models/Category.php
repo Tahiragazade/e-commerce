@@ -63,7 +63,7 @@ class Category extends \yii\db\ActiveRecord
 	{
 		return [
 			[['parent_id', 'status', 'created_at', 'updated_at', 'sort_order'], 'integer'],
-			[['name_az', 'name_en', 'name_ru'], 'string'],
+			[['name_az', 'name_en', 'name_ru','photo'], 'string'],
 			[['created_at', 'updated_at'], 'required'],
 			[['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['parent_id' => 'id']],
 		];

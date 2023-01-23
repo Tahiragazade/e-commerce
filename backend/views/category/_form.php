@@ -40,6 +40,15 @@ use mihaildev\elfinder\ElFinder;
 		}?>
 
 	<?php endforeach; ?>
+	<?= $form->field($model, 'photo')->widget(InputFile::className(), [
+		'language' => 'en',
+		'controller' => 'elfinder', // вставляем название контроллера, по умолчанию равен elfinder
+		'filter' => 'image',    // фильтр файлов, можно задать массив фильтров https://github.com/Studio-42/elFinder/wiki/Client-configuration-options#wiki-onlyMimes
+		'template' => '<div class="input-group">{input}<span class="input-group-btn">{button}</span></div>',
+		'options' => ['class' => 'form-control'],
+		'buttonOptions' => ['class' => 'btn btn-default'],
+		'multiple' => true       // возможность выбора нескольких файлов
+	]); ?>
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>

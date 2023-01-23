@@ -6,7 +6,7 @@ $this->title = 'My Yii Application';
 ?>
 <?= $this->render('/index/carousel');?>
 <?= $this->render('/index/featured');?>
-<?= $this->render('/index/categories');?>
+<?= $this->render('/index/categories',['categories'=>$categories]);?>
 <?= $this->render('/index/featured_products');?>
 <?= $this->render('/index/offer');?>
 <?= $this->render('/index/recent_products');?>

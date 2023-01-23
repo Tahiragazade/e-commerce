@@ -1,6 +1,7 @@
 <?php
 
 use kartik\range\RangeInput;
+use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii2mod\rating\StarRating;
 
@@ -133,10 +134,11 @@ use yii2mod\rating\StarRating;
 						<div class="row">
 							<div class="col-md-6">
 								<h4 class="mb-4">1 review for "Product Name"</h4>
+                                <?php foreach($comments as $comm){?>
 								<div class="media mb-4">
 									<img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
 									<div class="media-body">
-										<h6>John Doe<small> - <i>01 Jan 2045</i></small></h6>
+										<h6><?=$comm->name?><small> - <i><?=date('d.m.Y H:i', $comm->created_at)?></i></small></h6>
 										<div class="text-primary mb-2">
 											<i class="fas fa-star"></i>
 											<i class="fas fa-star"></i>
@@ -144,9 +146,10 @@ use yii2mod\rating\StarRating;
 											<i class="fas fa-star-half-alt"></i>
 											<i class="far fa-star"></i>
 										</div>
-										<p>Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.</p>
+										<p><?=$comm->note?></p>
 									</div>
 								</div>
+                                <?php }?>
 							</div>
 							<div class="col-md-6">
 
@@ -163,14 +166,10 @@ use yii2mod\rating\StarRating;
 									</div>
 								</div>
 								<?php $form = ActiveForm::begin(['action' => ['comment/create'],'options' => ['method' => 'post']]) ?>
+                                <?=$form->field($comment,'product_id')->hiddenInput(['value'=>$product->id])->label(false)?>
+								<?= $form->field($comment, 'star')->radioList( [1=>'',2=>'',3=>'',4=>'',5=>''],['labelOptions'=>['class'=>'custom-control-input']] )->label(false);?>
 
-                                <?= $form->field($comment, 'star')->widget(RangeInput::classname(), [
-	                                'options' => ['placeholder' => 'Rate (0 - 5)...'],
-	                                'html5Container' => ['style' => 'width:350px'],
-	                                'html5Options' => ['min' => 0, 'max' => 5],
-	                                'addon' => ['append' => ['content' => '<i class="fas fa-star"></i>']]
-                                ]);?>
-									<div class="form-group">
+                                <div class="form-group">
 										<label for="message">Your Review *</label>
                                         <?=$form->field($comment,'note')->textarea(['class'=>'form-control','cols'=>30,'rows'=>5])->label(false)?>
 									</div>
@@ -183,7 +182,7 @@ use yii2mod\rating\StarRating;
 										<?=$form->field($comment,'email')->textInput(['class'=>'form-control'])->label(false)?>
 									</div>
 									<div class="form-group mb-0">
-										<input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
+										<?= Html::submitButton(Yii::t('app', 'Leave Your Review'), ['class' => 'btn btn-primary px-3']) ?>
 									</div>
 								<?php ActiveForm::end()?>
 							</div>

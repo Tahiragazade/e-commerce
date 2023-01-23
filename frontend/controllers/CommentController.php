@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\Comment;
 use frontend\models\CommentSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -70,16 +71,23 @@ class CommentController extends Controller
         $model = new Comment();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+				if(!Yii::$app->user->isGuest){
+					$model->user_id=Yii::$app->user->id;
+
+				}
+	            $model->created_at=time();
+	             if(!$model->save()){
+					 print_r($model->errors);
+					 die();
+	             }
+	            return $this->redirect(Yii::$app->request->referrer);
             }
         } else {
             $model->loadDefaultValues();
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+	    return $this->redirect(Yii::$app->request->referrer);
     }
 
     /**
