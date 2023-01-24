@@ -53,6 +53,7 @@
 					['label' => 'MULTI LEVEL EXAMPLE', 'header' => true],
 					['label' => 'Label 1'],
 					['label' => 'Products','url'=>['product/index']],
+					['label' => 'Orders','url'=>['order/index']],
 
 					[
 						'label' => 'Setting',
