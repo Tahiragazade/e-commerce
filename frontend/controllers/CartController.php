@@ -28,7 +28,7 @@ class CartController extends Controller
 				'verbs' => [
 					'class' => VerbFilter::className(),
 					'actions' => [
-						'delete' => ['POST'],
+						'delete' => ['GET'],
 					],
 				],
 			]
@@ -150,7 +150,11 @@ class CartController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->findModel($id)->delete();
+		$cart =Cart::find()->where('id=:id',[':id' => $id])->andWhere(['session_id' => Yii::$app->session->id])->orWhere(['user_id' => Yii::$app->user->id])->one();
+		if($cart!=null){
+			$cart->delete();
+		}
+
 
 		return $this->redirect(['index']);
 	}
@@ -164,7 +168,7 @@ class CartController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if(($model = Cart::findOne(['id' => $id])) !== null) {
+		if(($model = Cart::find()->where('id=:id',[':id' => $id])) !== null) {
 			return $model;
 		}
 

@@ -39,7 +39,15 @@
 						</div>
 					</td>
 					<td class="align-middle">$<?=$product->product->price*$product->count?></td>
-					<td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
+					<td class="align-middle"><?= Html::a('<i class="fa fa-times"></i>',
+                            ['cart/delete', 'id' => $product->id], [
+							'class' => 'btn btn-sm btn-danger',
+                            'data-method'=>'POST',
+//							'data' => [
+//								'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+//								'method' => 'post',
+//							],
+						]) ?></td>
 				</tr>
 			<?php }?>
 				</tbody>

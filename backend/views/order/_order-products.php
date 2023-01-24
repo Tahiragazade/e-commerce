@@ -53,17 +53,12 @@ $this->params['breadcrumbs'][] = $this->title;
 	        [
 		        'attribute' => 'link',
 		        'format' => 'html',
-		        'value'=>function($data) {  return Url::to('https://'.Yii::$app->params['frontendBaseUrl'].'/site/details/'.$data->product_id.'',true);},
+		        'value'=>function($data) {  return Url::to('/frontend/web/az/detail.html?id='.$data->product_id.'',true);},
 	        ],
             'discounted_price',
             'count',
             'price',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, OrderProduct $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
-            ],
+
         ],
     ]); ?>
 
