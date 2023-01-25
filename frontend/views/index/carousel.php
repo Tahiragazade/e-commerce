@@ -32,22 +32,16 @@
 			</div>
 		</div>
 		<div class="col-lg-4">
+            <?php foreach($discounts as $discount){?>
 			<div class="product-offer mb-30" style="height: 200px;">
-				<img class="img-fluid" src="img/offer-1.jpg" alt="">
+				<img class="img-fluid" src="<?=$discount->small_photo?>" alt="">
 				<div class="offer-text">
 					<h6 class="text-white text-uppercase">Save 20%</h6>
 					<h3 class="text-white mb-3">Special Offer</h3>
 					<a href="" class="btn btn-primary">Shop Now</a>
 				</div>
 			</div>
-			<div class="product-offer mb-30" style="height: 200px;">
-				<img class="img-fluid" src="img/offer-2.jpg" alt="">
-				<div class="offer-text">
-					<h6 class="text-white text-uppercase">Save 20%</h6>
-					<h3 class="text-white mb-3">Special Offer</h3>
-					<a href="" class="btn btn-primary">Shop Now</a>
-				</div>
-			</div>
+            <?php }?>
 		</div>
 	</div>
 </div>
