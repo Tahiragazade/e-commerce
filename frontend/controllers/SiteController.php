@@ -92,6 +92,7 @@ class SiteController extends Controller
 		$carousels=Product::find()->limit(3)->multilingual()->orderBy('id','DESC')->all();
 		$discounts=Product::find()->limit(2)->multilingual()->orderBy('id','DESC')->all();
 		$recents=Product::find()->limit(8)->multilingual()->orderBy('id','DESC')->all();
+		$feature_products=Product::find()->limit(8)->multilingual()->orderBy('id','DESC')->all();
 
 //		print_r($carousels);
 //		die();
@@ -101,6 +102,7 @@ class SiteController extends Controller
 	        'carousels'=>$carousels,
 	        'discounts'=>$discounts,
 	        'recents'=>$recents,
+	        'feature_products'=>$feature_products,
         ]);
     }
 	public function actionShop()
