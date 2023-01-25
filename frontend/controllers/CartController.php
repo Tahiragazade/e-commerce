@@ -106,12 +106,15 @@ class CartController extends Controller
 		if($this->request->isPost) {
 			if($model->load($this->request->post())) {
 				if(!Yii::$app->user->isGuest) {
-					$model->user_id = Yii::$app->id;
+					$model->user_id = Yii::$app->user->id;
 				}
 				$model->session_id = Yii::$app->session->id;
 				$model->created_at = time();
 				$model->updated_at = time();
-				$model->save();
+				if(!$model->save()){
+					print_r($model->errors);
+					die();
+				}
 				return $this->redirect(['index']);
 			}
 		} else {
