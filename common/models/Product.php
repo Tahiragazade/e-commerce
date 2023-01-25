@@ -74,7 +74,7 @@ class Product extends \yii\db\ActiveRecord
 	        [['description_az','description_en','description_ru','information_az','information_en','information_ru'],'string'],
 	        [['size','color'],'safe'],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['category_id' => 'id']],
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Admin::class, 'targetAttribute' => ['created_by' => 'id']],
         ];
     }
 
@@ -112,7 +112,7 @@ class Product extends \yii\db\ActiveRecord
      */
     public function getCreatedBy()
     {
-        return $this->hasOne(User::class, ['id' => 'created_by']);
+        return $this->hasOne(Admin::class, ['id' => 'created_by']);
     }
 
     /**

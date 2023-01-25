@@ -89,9 +89,13 @@ class SiteController extends Controller
     public function actionIndex()
     {
 		$categories=Category::find()->multilingual()->all();
+		$carousels=Product::find()->limit(3)->multilingual()->orderBy('id','DESC')->all();
+//		print_r($carousels);
+//		die();
         return $this->render('index',
         [
 			'categories'=>$categories,
+	        'carousels'=>$carousels,
         ]);
     }
 	public function actionShop()

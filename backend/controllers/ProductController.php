@@ -91,10 +91,14 @@ class ProductController extends Controller
 
 	    if ($model->load($this->request->post()) ) {
 
-		    $model->created_by =Yii::$app->user->id;
+		    $model->created_by = Yii::$app->user->id;
 		    $model->created_at =time();
 		    $model->updated_at =time();
-		    $model->save();
+		    if(!$model->save()){
+				print_r($model->errors);
+				echo Yii::$app->user->id;
+				die();
+		    }
 		    $model->load($this->request->post());
 		    foreach($langs as $key=> $value) {
 			    $content = new ProductContent();
@@ -106,6 +110,7 @@ class ProductController extends Controller
 			    $content->information = $model->{'information_'.$key};
 			    $model->link('productContents', $content);
 		    }
+
 			foreach($model->size as $size){
 				$sizes=new ProductSize();
 				$sizes->product_id=$model->id;
@@ -166,6 +171,8 @@ class ProductController extends Controller
 			    $content->information = $model->{'information_'.$key};
 			    $model->link('productContents', $content);
 		    }
+//		    print_r($model->size);
+//		    die();
 			ProductSize::deleteAll(['product_id'=>$model->id]);
 		    foreach($model->size as $size){
 			    $sizes=new ProductSize();
@@ -173,7 +180,7 @@ class ProductController extends Controller
 			    $sizes->size_id=$size;
 			    $sizes->save();
 		    }
-			Product::deleteAll(['product_id'=>$model->id]);
+			ProductColor::deleteAll(['product_id'=>$model->id]);
 		    foreach($model->color as $color){
 			    $colors=new ProductColor();
 			    $colors->product_id=$model->id;
