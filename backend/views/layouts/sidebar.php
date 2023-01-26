@@ -54,6 +54,7 @@
 					['label' => 'Label 1'],
 					['label' => 'Products','url'=>['product/index']],
 					['label' => 'Orders','url'=>['order/index']],
+					['label' => 'Vendor','url'=>['vendor/index']],
 
 					[
 						'label' => 'Setting',

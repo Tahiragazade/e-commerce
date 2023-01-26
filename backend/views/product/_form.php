@@ -96,7 +96,7 @@ use kartik\select2\Select2;
 		'template' => '<div class="input-group">{input}<span class="input-group-btn">{button}</span></div>',
 		'options' => ['class' => 'form-control'],
 		'buttonOptions' => ['class' => 'btn btn-default'],
-		'multiple' => true       // возможность выбора нескольких файлов
+		'multiple' => false       // возможность выбора нескольких файлов
 	]); ?>
 	<?= $form->field($model, 'photo')->widget(InputFile::className(), [
 		'language' => 'en',
