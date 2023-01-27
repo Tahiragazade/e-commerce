@@ -27,15 +27,15 @@ class AppAsset extends AssetBundle
 	    'lib/owlcarousel/assets/owl.carousel.min.css',
     ];
     public $js = [
-//		'https://code.jquery.com/jquery-3.4.1.min.js',
-//	    'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js',
+		'https://code.jquery.com/jquery-3.4.1.min.js',
+	    'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js',
 	    'lib/easing/easing.min.js',
 	    'lib/owlcarousel/owl.carousel.min.js',
 	    'jqBootstrapValidation.min.js',
 		'js/contact.js',
 		'js/main.js',
-	    'https://code.jquery.com/jquery-3.4.1.min.js',
-	    'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js',
+//	    'https://code.jquery.com/jquery-3.4.1.min.js',
+//	    'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js',
     ];
     public $depends = [
 //        'yii\web\YiiAsset',

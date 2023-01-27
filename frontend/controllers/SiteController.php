@@ -6,6 +6,7 @@ use common\models\Cart;
 use common\models\Category;
 use common\models\Comment;
 use common\models\Product;
+use common\models\Vendor;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -93,6 +94,7 @@ class SiteController extends Controller
 		$discounts=Product::find()->limit(2)->multilingual()->orderBy('id','DESC')->all();
 		$recents=Product::find()->limit(8)->multilingual()->orderBy('id','DESC')->all();
 		$feature_products=Product::find()->limit(8)->multilingual()->orderBy('id','DESC')->all();
+		$vendors=Vendor::find()->where(['status'=>1])->all();
 
 //		print_r($carousels);
 //		die();
@@ -103,6 +105,7 @@ class SiteController extends Controller
 	        'discounts'=>$discounts,
 	        'recents'=>$recents,
 	        'feature_products'=>$feature_products,
+	        'vendors'=>$vendors,
         ]);
     }
 	public function actionShop()
