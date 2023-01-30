@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Address;
 use common\models\Cart;
 use common\models\Order;
+use common\models\Session;
 use frontend\models\CartSearch;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -44,7 +45,13 @@ class CartController extends Controller
 	{
 //        $searchModel = new CartSearch();
 //        $dataProvider = $searchModel->search($this->request->queryParams);
-		$products = Cart::find()->where(['session_id' => Yii::$app->session->id])->orWhere(['user_id' => Yii::$app->user->id])->all();
+		$session=Session::find()->where(['session_id'=>Yii::$app->session->id])->one();
+		if($session!=null){
+			$key=$session->key;
+		}else{
+			$key=Yii::$app->session->id;
+		}
+		$products = Cart::find()->where(['session_id' => $key])->orWhere(['user_id' => Yii::$app->user->id])->all();
 		$total_price = 0;
 		foreach($products as $product) {
 			$total_price += $product->product->price * $product->count;
@@ -107,8 +114,20 @@ class CartController extends Controller
 			if($model->load($this->request->post())) {
 				if(!Yii::$app->user->isGuest) {
 					$model->user_id = Yii::$app->user->id;
+					$model->session_id = Yii::$app->session->id;
+				}else{
+					$session=Session::find()->where(['session_id'=>Yii::$app->session->id])->one();
+					if(!$session==null){
+						$key=$session->key;
+					}else{
+						$new_session= new Session();
+						$new_session->session_id=Yii::$app->session->id;
+						$new_session->key=Yii::$app->security->generateRandomString(12);
+						$new_session->save();
+						$key=$new_session->key;
+					}
+					$model->session_id = $key;
 				}
-				$model->session_id = Yii::$app->session->id;
 				$model->created_at = time();
 				$model->updated_at = time();
 				if(!$model->save()){
@@ -177,4 +196,5 @@ class CartController extends Controller
 
 		throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 	}
+
 }

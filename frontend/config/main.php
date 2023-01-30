@@ -17,6 +17,8 @@ return [
 	    'user' => [
 		    'identityClass' => 'common\models\User',
 		    'enableAutoLogin' => true,
+		    'on afterLogin' => ['common\models\Cart', 'updateCart'],
+		    'on beforeLogin' => ['common\models\Cart', 'cartUpdate'],
 		    'identityCookie' => [
 			    'name' => '_frontendUser', // unique for frontend
 		    ]

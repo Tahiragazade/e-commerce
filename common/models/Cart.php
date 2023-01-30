@@ -110,4 +110,23 @@ class Cart extends \yii\db\ActiveRecord
 	{
 		return new MultilingualQuery(get_called_class());
 	}
+	public static function updateCart(){
+		$session = Yii::$app->session;
+		$key=$session->get('key');
+		$old_session=Session::find()->where(['key'=>$key])->one();
+		if($old_session!=null){
+			Cart::updateAll(['user_id'=>Yii::$app->user->id],['session_id'=>$old_session->key]);
+			$old_session->delete();
+		}
+		$session->remove('key');
+		return true;
+	}
+	public static function cartUpdate(){
+		$old_session=Session::find()->where(['session_id'=>Yii::$app->session->id])->one();
+		if($old_session!=null) {
+			Yii::$app->session->set('key', $old_session->key);
+		}
+
+		return true;
+	}
 }
