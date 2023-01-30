@@ -2,7 +2,7 @@
 
 /** @var yii\web\View $this */
 
-$this->title = 'My Yii Application';
+$this->title = 'EBazar';
 ?>
 <?= $this->render('/index/carousel',['carousels'=>$carousels,'discounts'=>$discounts,]);?>
 <?= $this->render('/index/featured');?>
